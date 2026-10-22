@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پک آزمون هوش ششم</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f5fa;color:#182337;font:16px/2 Tahoma,Arial,sans-serif}
+header{background:linear-gradient(135deg,#173a70,#367bd0);color:white;text-align:center;padding:24px 14px}
+main{max-width:950px;margin:20px auto;padding:0 12px}.panel,.question{background:#fff;border-radius:13px;padding:16px;margin:13px 0;box-shadow:0 3px 14px #172b4d0d}
+.notice{background:#fff3d0;border-right:5px solid #e6a500;padding:10px 14px;border-radius:9px}
+.top{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}button,.link{border:0;border-radius:9px;background:#245db0;color:#fff;padding:10px 15px;font:inherit;cursor:pointer;text-decoration:none;display:inline-block}
+button.secondary{background:#56657b}.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+.choice{border:1px solid #d8e0ec;border-radius:9px;padding:7px 10px;display:flex;gap:8px;align-items:flex-start;cursor:pointer}.choice:has(input:checked){background:#e8f1ff;border-color:#3977c7}
+.question h3{font-size:17px;margin:0 0 10px}.tag{font-size:12px;color:#476a9c;background:#eaf1fc;padding:2px 8px;border-radius:20px}
+#result{display:none;background:#e4f8e9;border:1px solid #a7ddb5;padding:15px;border-radius:12px;margin:16px 0}.wrong{border:2px solid #e5a4a4}.right{border:2px solid #8bc9a0}.explain{display:none;background:#f1f7ff;border-radius:8px;padding:8px;margin-top:8px}.review .explain{display:block}.muted{color:#627087;font-size:13px}
+@media print{header{background:#fff;color:#000;border-bottom:2px solid #333}.top,button,.notice .hideprint{display:none!important}body{background:#fff}.panel,.question{box-shadow:none;border:1px solid #bbb;break-inside:avoid}}
+</style></head>
+<body><header><h1>پک آزمون هوش و استعداد ششم</h1><p>۳۰ سؤال چهارگزینه‌ای | پاسخ را تیک بزن و نتیجه را ببین</p></header>
+<main>
+<div class="notice"><b>توجه:</b> این آزمون شامل سؤال‌های تألیفی و مستقل است؛ سؤال‌های عین کتاب مهروماه نیست. برای هر سؤال فقط یک گزینه را انتخاب کن، سپس «ثبت پاسخ‌ها و دیدن نتیجه» را بزن.</div>
+<div class="top"><button id="submit">ثبت پاسخ‌ها و دیدن نتیجه</button><button class="secondary" id="review">نمایش پاسخ‌ها و توضیح</button><button class="secondary" id="reset">شروع دوباره</button><a class="link" href="rahnama.html">رفتن به راهنمای مباحث</a><a class="link" href="index.html">پاسخ‌برگ ۱۲۰ سؤالی</a></div>
+<div id="result" aria-live="polite"></div><div id="questions"></div>
+<div class="panel"><h2>راهنمای تمرین</h2><p>اگر سؤال دشوار بود، آن را خالی بگذار و بعداً برگرد. پس از پایان آزمون، پاسخ درست و توضیح کوتاه هر سؤال را ببین. نتیجه فقط برای تمرین است و نمرهٔ رسمی یا سنجش استاندارد هوش نیست.</p></div>
+</main>
+<script>
+const Q=[
+["دنبالهٔ ۳، ۷، ۱۱، ۱۵، ... عدد بعدی چیست؟",["۱۷","۱۸","۱۹","۲۰"],2,"هر بار ۴ واحد اضافه می‌شود."],
+["کدام مورد با بقیه هم‌گروه نیست؟",["گنجشک","کبوتر","پروانه","کلاغ"],2,"پروانه حشره است و بقیه پرنده‌اند."],
+["اگر همهٔ کتاب‌ها وسیلهٔ خواندن باشند و این شیء کتاب باشد، نتیجه چیست؟",["این شیء وسیلهٔ خواندن است","همهٔ وسایل کتاب‌اند","این شیء مداد است","نمی‌توان نتیجه گرفت"],0,"نتیجه از دو گزاره به‌دست می‌آید."],
+["نصفِ ۳۶ به‌علاوهٔ ۴ چند می‌شود؟",["۱۸","۲۰","۲۲","۲۴"],1,"۳۶÷۲=۱۸ و ۱۸+۴=۲۲. ",2],
+["متضاد «پنهان» کدام است؟",["مخفی","آشکار","تاریک","آرام"],1,"پنهان یعنی مخفی؛ متضاد آن آشکار است."],
+["اگر امروز پنجشنبه باشد، ۹ روز دیگر چه روزی است؟",["جمعه","شنبه","یکشنبه","دوشنبه"],0,"۷ روز بعد پنجشنبه است؛ ۲ روز دیگر شنبه. ",1],
+["عدد بعدی: ۲، ۴، ۸، ۱۶، ...",["۲۰","۲۴","۳۰","۳۲"],3,"هر عدد دو برابر می‌شود."],
+["کتاب به خواندن مربوط است؛ قیچی به چه کاری؟",["نوشتن","بریدن","اندازه‌گیری","چسباندن"],1,"کار معمول قیچی بریدن است."],
+["محیط مستطیل با طول ۸ و عرض ۳ چقدر است؟",["۱۱","۱۶","۲۲","۲۴"],2,"محیط برابر ۲×(۸+۳)=۲۲ است."],
+["کدام عدد متفاوت است؟",["۹","۱۶","۲۵","۲۷"],3,"سه عدد اول مربع کامل‌اند؛ ۲۷ مربع کامل نیست."],
+["در صف، سارا از جلو پنجم و از عقب چهارم است. چند نفرند؟",["۷","۸","۹","۱۰"],1,"۵+۴−۱=۸ نفر."],
+["مترادف «دلیر» کدام است؟",["شجاع","خسته","ترسو","خاموش"],0,"دلیر و شجاع هم‌معنی‌اند."],
+["اگر A=۱، B=۲، C=۳ باشد، جمع ارزش CAB چقدر است؟",["۵","۶","۷","۸"],1,"۳+۱+۲=۶."],
+["سه‌چهارمِ ۲۰ چند است؟",["۵","۱۰","۱۵","۱۸"],2,"۲۰÷۴×۳=۱۵."],
+["الگو: دایره، مربع، دایره، مربع، ...",["مثلث","دایره","مربع","ستاره"],1,"الگو یکی‌درمیان تکرار می‌شود."],
+["علی از رضا سریع‌تر است و رضا از مهدی سریع‌تر است. چه کسی کندتر است؟",["علی","رضا","مهدی","مشخص نیست"],2,"ترتیب سرعت: علی، رضا، مهدی."],
+["یک ساعت و ۲۰ دقیقه چند دقیقه است؟",["۷۰","۸۰","۹۰","۱۰۰"],3,"۶۰+۲۰=۸۰ دقیقه."],
+["کدام شکل ۳ ضلع دارد؟",["مربع","مثلث","پنج‌ضلعی","شش‌ضلعی"],1,"مثلث سه ضلع دارد."],
+["قیمت ۴ مداد ۲۸ هزار تومان است. یک مداد چند است؟",["۵۰۰۰","۶۰۰۰","۷۰۰۰","۸۰۰۰"],2,"۲۸۰۰۰÷۴=۷۰۰۰."],
+["کدام واژه با بقیه متفاوت است؟",["زمستان","بهار","سه‌شنبه","تابستان"],2,"سه‌شنبه روز هفته است و بقیه فصل‌اند."],
+["اگر ۲ گربه در ۲ دقیقه ۲ موش بگیرند، با همان سرعت ۴ گربه در ۲ دقیقه چند موش می‌گیرند؟",["۲","۴","۶","۸"],1,"هر گربه در دو دقیقه یک موش می‌گیرد؛ پس ۴ موش."],
+["عدد گمشده: ۱، ۴، ۹، ۱۶، ...",["۲۰","۲۴","۲۵","۳۲"],2,"مربع اعداد ۱ تا ۵ هستند؛ ۵²=۲۵."],
+["کدام وسیله برای سنجش دماست؟",["ترازو","خط‌کش","دماسنج","قطب‌نما"],2,"دماسنج دما را اندازه می‌گیرد."],
+["اگر همهٔ مربع‌ها چهار ضلع دارند، کدام گزاره حتماً درست است؟",["هر چهارضلعی مربع است","مربع چهار ضلع دارد","دایره چهار ضلع دارد","هیچ مربعی شکل نیست"],1,"این گزاره دقیقاً از فرض داده‌شده پیروی می‌کند."],
+["۲۵ درصدِ ۸۰ چند است؟",["۱۰","۱۵","۲۰","۲۵"],2,"۲۵ درصد برابر یک‌چهارم است؛ ۸۰÷۴=۲۰."],
+["کدام واژه زودتر در فرهنگ لغت می‌آید؟",["باران","باد","باغ","بال"],2,"ترتیب حروف پس از «با»: غ، د، ر، ل؛ باغ زودتر می‌آید."],
+["اگر شمال روبه‌رو باشد و به راست بچرخی، رو به کدام جهت هستی؟",["غرب","شرق","جنوب","شمال"],1,"سمت راستِ شمال، شرق است."],
+["دنبالهٔ ۵، ۱۰، ۸، ۱۶، ۱۴، ...",["۱۸","۲۰","۲۲","۲۸"],1,"الگو: ×۲، −۲، ×۲، −۲؛ پس ۱۴×۲=۲۸. ",3],
+["کدام کسر بزرگ‌تر است؟",["۱/۲","۲/۳","۳/۸","۱/۴"],1,"۲/۳ تقریباً ۰٫۶۷ و از بقیه بزرگ‌تر است."],
+["اگر امروز دوشنبه باشد، ۱۴ روز بعد چه روزی است؟",["دوشنبه","سه‌شنبه","چهارشنبه","یکشنبه"],0,"۱۴ روز دو هفتهٔ کامل است؛ همان دوشنبه."]
+];
+const root=document.getElementById("questions");
+Q.forEach((q,i)=>{let d=document.createElement("section");d.className="question";d.id="q"+i;d.innerHTML='<h3><span class="tag">'+(i<5?'منطق و الگو':i<10?'ریاضی':'هوش و دقت')+'</span> سؤال '+(i+1)+': '+q[0]+'</h3><div class="choices">'+q[1].map((a,j)=>'<label class="choice"><input type="radio" name="q'+i+'" value="'+j+'"><span>'+["الف","ب","ج","د"][j]+') '+a+'</span></label>').join("")+'</div><div class="explain"></div>';root.appendChild(d)});
+function grade(){let score=0,answered=0;Q.forEach((q,i)=>{let el=document.getElementById("q"+i),sel=el.querySelector('input[name="q'+i+'"]:checked'),exp=el.querySelector(".explain");el.classList.remove("right","wrong");if(sel){answered++;if(+sel.value===q[2]){score++;el.classList.add("right")}else el.classList.add("wrong")}exp.innerHTML='<b>پاسخ درست: '+["الف","ب","ج","د"][q[2]]+') '+q[1][q[2]]+'</b><br>'+q[3];});let r=document.getElementById("result");r.style.display="block";r.innerHTML='<h2>نتیجهٔ آزمون</h2><p>پاسخ درست: <b>'+score+' از '+Q.length+'</b></p><p>پاسخ داده‌شده: '+answered+' از '+Q.length+'</p><p>'+(score>=25?'عالی! عملکردت خیلی خوب بود.':score>=18?'خوب است؛ سؤال‌های اشتباه را مرور کن.':'اشکالی ندارد؛ توضیح پاسخ‌ها را بخوان و دوباره تلاش کن.')+'</p>';r.scrollIntoView({behavior:"smooth",block:"start"});}
+document.getElementById("submit").onclick=()=>{grade();document.body.classList.add("review")};
+document.getElementById("review").onclick=()=>{document.body.classList.toggle("review");if(document.body.classList.contains("review")){Q.forEach((q,i)=>document.getElementById("q"+i).querySelector(".explain").innerHTML='<b>پاسخ درست: '+["الف","ب","ج","د"][q[2]]+') '+q[1][q[2]]+'</b><br>'+q[3]);}};
+document.getElementById("reset").onclick=()=>{document.querySelectorAll('input[type=radio]').forEach(x=>x.checked=false);document.querySelectorAll(".question").forEach(x=>x.classList.remove("right","wrong"));document.querySelectorAll(".explain").forEach(x=>x.innerHTML="");document.getElementById("result").style.display="none";document.body.classList.remove("review");window.scrollTo({top:0,behavior:"smooth"})};
+</script></body></html>
