@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پاسخ‌برگ ۱۲۰ سؤالی | هوش و استعداد تحلیلی ششم</title>
+<style>
+@page{size:A4 portrait;margin:8mm}
+*{box-sizing:border-box}
+body{font-family:Tahoma,Arial,sans-serif;color:#111;margin:0;background:#fff}
+h1{font-size:18px;text-align:center;margin:0 0 3px}
+.sub{text-align:center;font-size:10px;margin:0 0 8px}
+.info{font-size:10px;margin:6px 0 8px}
+.note{font-size:9px;border:1px solid #888;padding:5px;margin-bottom:7px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm}
+.section{border:1px solid #555}
+.row{display:grid;grid-template-columns:22px repeat(4,1fr);align-items:center;text-align:center;height:5.45mm;border-bottom:0.3px solid #bbb;font-size:9px}
+.row.head{background:#e9edf2;font-weight:bold;height:6mm}
+.row .n{font-weight:bold;border-left:1px solid #bbb;height:100%;display:flex;align-items:center;justify-content:center}
+.circle{font-size:12px;line-height:1}
+.footer{font-size:8px;margin-top:5px;text-align:center}
+@media screen{body{max-width:210mm;margin:12px auto;padding:8mm;box-shadow:0 0 8px #ccc}.print{display:block;margin:10px auto;padding:8px 18px;font-size:14px}}
+@media print{.print{display:none}}
+</style>
+</head>
+<body>
+<button class="print" onclick="window.print()">چاپ / ذخیره به‌صورت PDF</button>
+<h1>پاسخ‌برگ ۱۲۰ سؤالی</h1>
+<p class="sub">تمرین هوش و استعداد تحلیلی پایهٔ ششم — برگهٔ خام قابل چاپ</p>
+<div class="info">نام و نام خانوادگی: ....................................................　 تاریخ: ........................　 آزمون/بخش: ........................</div>
+<div class="note">راهنما: برای هر سؤال فقط یک گزینه را علامت بزنید. این فایل پاسخ‌برگ خام است و شامل پاسخ‌های رسمی یا محتوای بازنشرشدهٔ کتاب نیست.</div>
+<div class="grid" id="grid"></div>
+<div class="footer">برای ساخت PDF: روی «چاپ / ذخیره به‌صورت PDF» بزنید و در مقصد چاپگر، گزینهٔ Save as PDF را انتخاب کنید.</div>
+<script>
+const grid=document.getElementById('grid');
+for(let start=1;start<=120;start+=40){
+ const section=document.createElement('div'); section.className='section';
+ section.innerHTML='<div class="row head"><div class="n">شماره</div><div>الف</div><div>ب</div><div>ج</div><div>د</div></div>';
+ for(let q=start;q<start+40;q++){
+  const row=document.createElement('div'); row.className='row';
+  row.innerHTML='<div class="n">'+q+'</div><div class="circle">○</div><div class="circle">○</div><div class="circle">○</div><div class="circle">○</div>';
+  section.appendChild(row);
+ }
+ grid.appendChild(section);
+}
+</script>
+</body>
+</html>
